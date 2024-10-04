@@ -1,0 +1,97 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    cursor: default;
+    background-color: #1e1e1e; 
+    color: #ffffff; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    text-align: center;
+    border-radius: 15px;
+    padding: 40px 60px;
+    background: rgba(30, 30, 30, 0.9);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s, color 0.3s;
+    position: relative;
+    z-index: 1; 
+}
+
+.container h1 {
+    margin-bottom: 20px;
+    font-size: 36px;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+.description {
+    margin-bottom: 30px;
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.8; 
+}
+
+.container button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-position 0.5s ease, transform 0.3s ease;
+    margin: 10px; 
+}
+
+.container button:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+}
+
+.container button:active {
+    transform: translateY(0);
+}
+
+.light-theme {
+    background-color: #ffffff; 
+    color: #1e1e1e; 
+}
+
+.light-theme .container {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.theme-toggle:hover {
+    background: #e67e22;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; 
+}
