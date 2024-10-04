@@ -1,0 +1,141 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/t.css">
+        <title>3D Registration & Login</title>
+    </head>
+    <body class="dark-mode"> <!-- Темная тема по умолчанию -->
+        <canvas id="background"></canvas>
+
+        <div class="container">
+            <div class="form-container" id="form-container">
+                <h2 id="form-title">Register</h2>
+                <form id="auth-form">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Submit</button>
+                    <p class="toggle-btn" onclick="toggleForm()">Already have an account? Login</p>
+                </form>
+                <p class="toggle-btn" onclick="toggleTheme()">Toggle Theme</p>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script>
+            const canvas = document.getElementById("background");
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            const geometry = new THREE.SphereGeometry(0.1, 24, 24);
+            const material = new THREE.MeshStandardMaterial({ color: 0x7f00ff });
+            const particles = [];
+
+            for (let i = 0; i < 200; i++) {
+                const particle = new THREE.Mesh(geometry, material);
+                particle.position.set(
+                    (Math.random() - 0.5) * 40,  
+                    (Math.random() - 0.5) * 40,
+                    (Math.random() - 0.5) * 40
+                );
+                scene.add(particle);
+                particles.push(particle);
+            }
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(5, 5, 5);
+            scene.add(pointLight);
+
+            camera.position.z = 20; 
+
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+
+            function animate() {
+                particles.forEach(particle => {
+                    particle.position.x += Math.sin(particle.position.y + Date.now() * 0.001) * 0.005;
+                    particle.position.y += Math.cos(particle.position.x + Date.now() * 0.001) * 0.005;
+                });
+
+                camera.position.x += (mouseX * 10 - camera.position.x) * 0.05;
+                camera.position.y += (mouseY * 10 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            const formTitle = document.getElementById("form-title");
+            const authForm = document.getElementById("auth-form");
+            const formContainer = document.getElementById("form-container");
+            const container = document.querySelector('.container');
+            let isRegister = true;
+
+            function toggleForm() {
+                formContainer.classList.add("hidden");
+
+                setTimeout(() => {
+                    if (isRegister) {
+                        formTitle.textContent = "Login";
+                        authForm.innerHTML = 
+                            `<input type="email" id="email" placeholder="Email" required>
+                            <input type="password" id="password" placeholder="Password" required>
+                            <button type="submit">Login</button>
+                            <p class="toggle-btn" onclick="toggleForm()">Don't have an account? Register</p>`;
+                        container.style.height = '370px';
+                        isRegister = false;
+                    } else {
+                        formTitle.textContent = "Register";
+                        authForm.innerHTML = 
+                            `<input type="text" id="username" placeholder="Username" required>
+                            <input type="email" id="email" placeholder="Email" required>
+                            <input type="password" id="password" placeholder="Password" required>
+                            <button type="submit">Submit</button>
+                            <p class="toggle-btn" onclick="toggleForm()">Already have an account? Login</p>`;
+                        container.style.height = '450px';
+                        isRegister = true;
+                    }
+                    formContainer.classList.remove("hidden");
+                }, 500);
+            }
+
+            function toggleTheme() {
+                document.body.classList.toggle("dark-mode");
+                document.body.classList.toggle("light-mode");
+                container.classList.toggle("dark-mode");
+                container.classList.toggle("light-mode");
+                formTitle.classList.toggle("dark-mode");
+                formTitle.classList.toggle("light-mode");
+                const inputs = document.querySelectorAll(".form-container input");
+                const button = document.querySelector(".form-container button");
+                const toggleButtons = document.querySelectorAll(".toggle-btn");
+                inputs.forEach(input => {
+                    input.classList.toggle("dark-mode");
+                    input.classList.toggle("light-mode");
+                });
+                button.classList.toggle("dark-mode");
+                button.classList.toggle("light-mode");
+                toggleButtons.forEach(toggleBtn => {
+                    toggleBtn.classList.toggle("dark-mode");
+                    toggleBtn.classList.toggle("light-mode");
+                });
+            }
+        </script>
+    </body>
+    </html>
