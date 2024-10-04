@@ -22,3 +22,5 @@ This project showcases a modern and visually appealing registration and login fo
 - **CSS3**: For styling and layout.
 - **Three.js**: For rendering the 3D background effects.
 - **JavaScript**: For interactive functionalities and animations.
+
+This software is distributed under the [MIT License](LICENSE).
